@@ -80,7 +80,7 @@ public class ClienteControlador {
 	
 
 	//localhost:8080/listar   lista en un html todos los clientes
-	@RequestMapping(value = "/listar", method = RequestMethod.GET)
+	@RequestMapping(value = {"/listar" ,"/"}, method = RequestMethod.GET)
 	public String listarClientes(@RequestParam(name="page", defaultValue ="0") int page,Model model) {
        
 		//creo la paginacion con el numero de pagina que envio desde la url
