@@ -2,10 +2,12 @@ package com.boot;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import com.boot.autorizacion.LoginSuccess;
+import com.boot.servicio.JpaUserDetailsService;
 
 
 //clase para configuracion de spring security
@@ -16,6 +18,12 @@ public class SpringSecurityConfig  extends WebSecurityConfigurerAdapter{
 	//reañlizo una inyeccion de la clase LoginSuccess
 	@Autowired
 	private LoginSuccess loginSuccess;
+	
+	@Autowired
+	private JpaUserDetailsService userDetailsService;
+	
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
 	
 
 	@Override
@@ -31,6 +39,14 @@ public class SpringSecurityConfig  extends WebSecurityConfigurerAdapter{
 		.accessDeniedPage("/error_403");//carga una pagina web con el mesnaje que no tiene permiso a ese recurso
 	}
 
-	
+	//para registrar a los usuarios
+		@Autowired
+		public void configurerGlobal(AuthenticationManagerBuilder build) throws Exception
+		{
+			//para trabajar con JPA
+			build.userDetailsService(userDetailsService)
+			.passwordEncoder(passwordEncoder);
+
+		}
 	
 }
