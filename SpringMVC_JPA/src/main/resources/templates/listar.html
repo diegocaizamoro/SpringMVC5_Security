@@ -11,7 +11,7 @@
 			<div class="card-header" th:text="${titulo}"></div>
 			<div class="card-body">
 
-				<div >
+				<div sec:authorize="isAuthenticated()">
 					<h4 class="card-title">
 						<a th:href="@{/formulario}" class="btn btn-primary">crear cliente</a>
 					</h4>
@@ -38,9 +38,9 @@
 							<td th:text="${cliente.mail}"></td>
 							<td th:text="${cliente.fechaCreacion}"></td>
 							
-							<td><a class="btn btn-primary btn-sm"
+							<td><a class="btn btn-primary btn-sm" sec:authorize="hasRole('ROLE_ADMIN')"
 								th:href="@{/formulario/} + ${cliente.id}" th:text="'editar'"></a></td>
-							<td><a class="btn btn-danger btn-sm"
+							<td><a class="btn btn-danger btn-sm" sec:authorize="hasRole('ROLE_ADMIN')"
 								th:href="@{/eliminar/} + ${cliente.id}" th:text="'eliminar'"
 								onclick="return confirm('Estás seguro que quieres eliminar?');"></a></td>
 						</tr>

@@ -11,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -60,7 +61,7 @@ public class ClienteControlador {
 		
 	}
 	
-	@GetMapping(value = "/ver/{id}")
+	@GetMapping(value = "/ver/{id}") 
 	public String ver(@PathVariable Long id,Map<String, Object> map, RedirectAttributes flash ) {
 		
 		Cliente cliente=iClienteServicio.findOne(id);
@@ -80,7 +81,8 @@ public class ClienteControlador {
 	
 
 	//localhost:8080/listar   lista en un html todos los clientes
-	@RequestMapping(value = {"/listar" ,"/"}, method = RequestMethod.GET)
+	//@RequestMapping(value = {"/listar" ,"/"}, method = RequestMethod.GET)
+	@RequestMapping(value = { "/listar","/"}, method = RequestMethod.GET)
 	public String listarClientes(@RequestParam(name="page", defaultValue ="0") int page,Model model) {
        
 		//creo la paginacion con el numero de pagina que envio desde la url
@@ -122,6 +124,7 @@ public class ClienteControlador {
 
 	}
 
+	@Secured("ROLE_ADMIN")  //anotacion para dar seguridad con spring security solo tendfra acceso el admin
 	@RequestMapping(value = "/formulario", method = RequestMethod.POST)
 	public String guardar(@Valid Cliente cliente, BindingResult resul,
 			RedirectAttributes flash,
