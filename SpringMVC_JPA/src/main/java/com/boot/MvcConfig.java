@@ -38,7 +38,8 @@ public class MvcConfig implements WebMvcConfigurer{
 		 return localResolver;
 	}
 	
-	//2.- para cambiar el locale cada vez que el usuario cambie el lenguaje un interceptor entra a trabajar
+	//2.- para cambiar el locale cada vez que el usuario cambie el lenguaje 
+	//un interceptor entra a trabajar
 	@Bean
 	public LocaleChangeInterceptor localeChangeInterceptor() {
 		LocaleChangeInterceptor localeInterceptor=new LocaleChangeInterceptor();
